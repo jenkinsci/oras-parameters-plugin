@@ -1,0 +1,22 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core">
+    <div>
+        <p>
+            This parameter allows you to select an ORAS platform from and index on a remote registry.
+        </p>
+        <p>
+            This expose to every build the following environment variables (with <strong>PARAMETER_NAME</strong> replaced by the actual parameter name):
+            <ul>
+                <li><strong>PARAMETER_NAME</strong> the resolved reference such as ghcr.io/jenkinsci/helm-charts/jenkins@sha256:42869d33a9b684f4c960b0256f1c0a444750b6e9fc70d03b929e84d7c728e19a (always set)</li>
+                <li><strong>PARAMETER_NAME_TAG</strong> the selected tag such as 5.6.0 (always set)</li>
+                <li><strong>PARAMETER_NAME_REGISTRY</strong> the resolved registry such as ghcr.io (always set)</li>
+                <li><strong>PARAMETER_NAME_REPOSITORY</strong> the resolved repository such as jenkinsci/helm-charts/jenkins (always set)</li>
+                <li><strong>PARAMETER_NAME_DIGEST</strong> the resolved digest such as sha256:42869d33a9b684f4c960b0256f1c0a444750b6e9fc70d03b929e84d7c728e19e (only set if valid tag)</li>
+                <li><strong>PARAMETER_NAME_TITLE</strong> title annotation such as jenkins (if available)</li>
+                <li><strong>PARAMETER_NAME_DESCRIPTION</strong> description annotation (if available)</li>
+                <li><strong>PARAMETER_NAME_CREATED</strong> created annotation such as 2024-09-12T16:01:30Z (if available)</li>
+                <li><strong>PARAMETER_NAME_SOURCE</strong> source annotation such as https://github.com/jenkinsci/jenkins (if available)</li>
+            </ul>
+        </p>
+    </div>
+</j:jelly>
