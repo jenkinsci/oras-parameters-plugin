@@ -36,6 +36,14 @@ public class RegistryClient {
     }
 
     /**
+     * Return all tags of an artifact in the registry.
+     * @param containerRef The reference
+     */
+    public List<String> getTags(ContainerRef containerRef, int n) {
+        return registry.getTags(containerRef, n, null).tags();
+    }
+
+    /**
      * Return the platforms descriptor for the given index
      * @param containerRef The reference
      * @return The list of platform
