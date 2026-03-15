@@ -41,6 +41,7 @@ public class OrasTagParameterDefinition extends AbstractOrasParameterDefinition 
     private static final Logger LOG = LoggerFactory.getLogger(OrasTagParameterDefinition.class);
 
     private String defaultTag;
+    private Integer maxTags;
 
     @DataBoundConstructor
     public OrasTagParameterDefinition(String name, String description, String containerRef) {
@@ -54,6 +55,15 @@ public class OrasTagParameterDefinition extends AbstractOrasParameterDefinition 
     @DataBoundSetter
     public void setDefaultTag(String defaultTag) {
         this.defaultTag = defaultTag;
+    }
+
+    public Integer getMaxTags() {
+        return maxTags;
+    }
+
+    @DataBoundSetter
+    public void setMaxTags(Integer maxTags) {
+        this.maxTags = maxTags;
     }
 
     @Override
@@ -115,7 +125,7 @@ public class OrasTagParameterDefinition extends AbstractOrasParameterDefinition 
         RegistryClient client = new RegistryClient(credentials, insecure);
         ContainerRef ref = ContainerRef.parse(containerRef);
         try {
-            return TagsResponse.of(client, ref);
+            return TagsResponse.of(client, ref, maxTags);
         } catch (OrasException e) {
             LOG.warn("Failed to fetch tags. Registry returned status code {}", e.getStatusCode(), e);
             return TagsResponse.empty(client, ref);
@@ -131,8 +141,10 @@ public class OrasTagParameterDefinition extends AbstractOrasParameterDefinition 
      * @param tags List of tags
      */
     public record TagsResponse(String effectiveReference, List<String> tags) {
-        public static TagsResponse of(RegistryClient client, ContainerRef containerRef) {
-            return new TagsResponse(client.getReference(containerRef), client.getTags(containerRef));
+        public static TagsResponse of(RegistryClient client, ContainerRef containerRef, Integer maxTags) {
+            return new TagsResponse(
+                    client.getReference(containerRef),
+                    maxTags != null ? client.getTags(containerRef, maxTags) : client.getTags(containerRef));
         }
 
         public static TagsResponse empty(RegistryClient client, ContainerRef containerRef) {
@@ -167,6 +179,7 @@ public class OrasTagParameterDefinition extends AbstractOrasParameterDefinition 
                 @AncestorInPath Item item,
                 @QueryParameter boolean insecure,
                 @QueryParameter String containerRef,
+                @QueryParameter Integer maxTags,
                 @QueryParameter String credentialsId) {
             if (item != null) {
                 item.checkPermission(Item.CONFIGURE);
@@ -180,7 +193,7 @@ public class OrasTagParameterDefinition extends AbstractOrasParameterDefinition 
                 UsernamePasswordCredentials credentials = resolveCredentials(credentialsId);
                 RegistryClient client = new RegistryClient(credentials, insecure);
                 ContainerRef ref = ContainerRef.parse(containerRef);
-                List<String> tags = client.getTags(ref);
+                List<String> tags = maxTags != null ? client.getTags(ref, maxTags) : client.getTags(ref);
                 return FormValidation.ok("Success! Found " + tags.size() + " tags.");
 
             } catch (OrasException e) {
