@@ -9,6 +9,7 @@ import land.oras.Descriptor;
 import land.oras.ManifestDescriptor;
 import land.oras.Platform;
 import land.oras.Registry;
+import land.oras.policy.ContainersPolicy;
 import land.oras.utils.Const;
 import org.jfree.util.Log;
 
@@ -112,7 +113,8 @@ public class RegistryClient {
     }
 
     private Registry buildRegistry(UsernamePasswordCredentials credentials, boolean insecure) {
-        Registry.Builder builder = Registry.builder().defaults();
+        Registry.Builder builder =
+                Registry.builder().withPolicy(ContainersPolicy.newPolicy()).defaults();
         if (insecure) {
             builder = builder.insecure();
         }
