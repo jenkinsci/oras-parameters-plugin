@@ -48,7 +48,7 @@
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>6667.v64d86185fd17</version>
+        <version>6751.v745d6a_31066a_</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -63,7 +63,7 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>oras-java-api</artifactId>
-      <version>0.8.0-206.v293960d77b_a_b_</version>
+      <version>0.8.1-211.v1c439df970b_b_</version>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
