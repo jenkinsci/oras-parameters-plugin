@@ -3,7 +3,7 @@
 This plugin allow to define new parameter types in Jenkins to list ORAS Artifacts tags or platform (including container images)
 
 > [!WARNING]
-> The ORAS Java SDK is currently in **alpha** state and might impact the stability of this plugin.
+> The ORAS Java SDK is currently in **beta** state and might impact the stability of this plugin.
 >
 > It's configuration and APIs might change in future releases
 
